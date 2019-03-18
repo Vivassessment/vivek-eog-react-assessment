@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-geolocated": "^2.4.1",
     "react-redux": "^5.0.7",
     "react-scripts": "2.0.5",
     "react-toastify": "^4.4.0",
