@@ -3,10 +3,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import sagas from "./sagas";
 import weatherReducer from "./reducers/Weather";
+import GetWheather from '../reducer';
+import rootSaga from '../reduxsaga';
 
 export default () => {
   const rootReducer = combineReducers({
-    weather: weatherReducer
+    weather: weatherReducer,
+    getWheather:GetWheather
   });
 
   const composeEnhancers = composeWithDevTools({});
@@ -15,6 +18,8 @@ export default () => {
   const store = createStore(rootReducer, composeEnhancers(middlewares));
 
   sagas.forEach(sagaMiddleware.run);
-
+  sagaMiddleware.run(rootSaga);
   return store;
 };
+
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Card from "@material-ui/core/Card";
 import CardHeaderRaw from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -35,32 +35,60 @@ const styles = {
 };
 
 const NowWhat = props => {
-  const { classes } = props;
+  const { classes, location } = props;
   return (
-    <Card className={classes.card}>
-      <CardHeader title="OK, vivek, you're all setup. Now What?" />
+    <Card style={{padding:"3px"}}>
+      <CardHeader title="Wheather App" />
       <CardContent>
         <List>
-          <ListItem>
-            <Avatar>1</Avatar>
-            <ListItemText primary="Connect to the Drone API" />
-          </ListItem>
-          <ListItem>
-            <Avatar>2</Avatar>
-            <ListItemText primary="Create your Visualization" />
-          </ListItem>
-          <ListItem>
-            <Avatar>3</Avatar>
-            <ListItemText primary="Poll the API" />
-          </ListItem>
-          <ListItem>
-            <Avatar>4</Avatar>
-            <ListItemText primary="Submit Your App" />
-          </ListItem>
+          {location && location.map((item)=> <ListSmall item={item}  key={item.title}/>)}
         </List>
       </CardContent>
     </Card>
   );
 };
+
+const ListSmall = props => {
+  const { item } = props
+  return (
+    <Fragment>
+        <ListItem style={{width:"100%"}}>
+          <ListItemText>Distance</ListItemText> <ListItemText>{item.distance}</ListItemText>
+        </ListItem>
+        <ListItem >
+          <ListItemText>Title</ListItemText> <ListItemText>{item.title}</ListItemText>
+        </ListItem>
+        <ListItem >
+          <ListItemText>Location Type</ListItemText> <ListItemText>{item.location_type}</ListItemText>
+        </ListItem>
+        <ListItem >
+          <ListItemText>Woeid</ListItemText> <ListItemText>{item.woeid}</ListItemText>
+        </ListItem>
+        <ListItem >
+          <ListItemText>Lattitude & Longitude</ListItemText> <ListItemText>{item.latt_long}</ListItemText>
+        </ListItem>
+        <hr/>
+        {item.consolidated_weather && item.consolidated_weather.map(item=>
+        <Fragment>
+          <ListItem>
+            <ListItem >
+              <ListItemText style={{width:"200px"}}>Weather State Name</ListItemText> <ListItemText style={{width:"150px"}}>{item.weather_state_name}</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>Min temp</ListItemText> <ListItemText>{item.min_temp}</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>Temperature</ListItemText> <ListItemText>{item.the_temp}</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>Max Temp</ListItemText> <ListItemText>{item.max_temp}</ListItemText>
+            </ListItem>
+          </ListItem>
+          <hr/>
+          </Fragment>
+          ) }
+      </Fragment>
+  )
+}
 
 export default withStyles(styles)(NowWhat);
